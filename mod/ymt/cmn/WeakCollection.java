@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 /**
- * ��Q�Ƃɂėv�f��ێ����� Collection �ł��B
+ * 弱参照にて要素を保持する Collection です。
  * @author Yamato
  */
 public class WeakCollection<E> extends AbstractCollection<E> implements Collection<E> {
@@ -33,7 +33,7 @@ public class WeakCollection<E> extends AbstractCollection<E> implements Collecti
 	protected final List<Reference<E>> inner = new ArrayList<Reference<E>>();
 
 	/**
-	 * value ����Q�Ƃɂ� WeakCollection �ɒǉ����܂��B
+	 * value を弱参照にて WeakCollection に追加します。
 	 */
 	@Override
 	public boolean add(E value) {
@@ -43,9 +43,9 @@ public class WeakCollection<E> extends AbstractCollection<E> implements Collecti
 	}
 
 	/**
-	 * WeakCollection �̗v�f�Ɋ֌W���锽���q��Ԃ��܂��B
-	 * ���� Iterator �� next �͏��������Q�Ƃɑ΂��� null ��Ԃ��܂��B
-	 * ���̍ہA�����I�ɗv�f�� remove ����܂��B
+	 * WeakCollection の要素に関係する反復子を返します。
+	 * この Iterator の next は消失した参照に対して null を返します。
+	 * その際、内部的に要素は remove されます。
 	 */
 	@Override
 	public Iterator<E> iterator() {
@@ -75,8 +75,8 @@ public class WeakCollection<E> extends AbstractCollection<E> implements Collecti
 	}
 
 	/**
-	 * ���݂̃R���N�V�����T�C�Y��Ԃ��܂��B
-	 * ���̒l�ɂ͂��łɏ��������Q�Ƃ��܂ނ��߁A���ۂ̃I�u�W�F�N�g���͂����菭�Ȃ��\��������܂��B
+	 * 現在のコレクションサイズを返します。
+	 * この値にはすでに消失した参照も含むため、実際のオブジェクト数はこれより少ない可能性があります。
 	 */
 	@Override
 	public int size() {

@@ -8,8 +8,7 @@ YMTLib
 
 ## 前提
 
-ModLoader が必要です。
-MinecraftForge でも動くかもしれません。
+MinecraftForge が必要です。
 
 
 ## 導入
@@ -49,6 +48,8 @@ limitations under the License.
 
 ## History
 
+- 164v2: ちょっとだけ機能追加
+- 164v1: Minecraft1.6.4+Forge対応版
 - 162v3: 内部使用変更と機能追加
 - 162v1: Minecraft1.6.2対応版
 - 161v1: Minecraft1.6.1対応版

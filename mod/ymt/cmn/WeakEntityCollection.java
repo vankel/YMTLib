@@ -17,7 +17,7 @@ package mod.ymt.cmn;
 
 import java.lang.ref.Reference;
 import java.util.Iterator;
-import net.minecraft.src.Entity;
+import net.minecraft.entity.Entity;
 
 /**
  * @author Yamato

@@ -15,10 +15,10 @@
  */
 package mod.ymt.cmn;
 
-import net.minecraft.src.Block;
-import net.minecraft.src.Icon;
-import net.minecraft.src.ItemBlock;
-import net.minecraft.src.ItemStack;
+import net.minecraft.block.Block;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.Icon;
 
 public class ItemWithMetadata extends ItemBlock {
 	public ItemWithMetadata(int id) {

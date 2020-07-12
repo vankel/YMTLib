@@ -16,23 +16,35 @@
 package mod.ymt.cmn;
 
 import java.util.logging.Logger;
-import net.minecraft.src.World;
+import net.minecraft.world.World;
 
 public abstract class NekonoteCore implements Runnable {
 	public final Logger logger = Logger.getLogger(getClass().getName());
 	private boolean running = false;
 	private long lastClickTime = 0;
 
-	public void debugPrint(String format, Object... args) {
+	public boolean isRunning() {
+		return running;
+	}
+
+	public void logFine(String format, Object... args) {
 		Trace.logFine(logger, format, args);
 	}
 
-	public void debugPrint(Throwable th, String format, Object... args) {
+	public void logFine(Throwable th, String format, Object... args) {
 		Trace.logFineThrow(logger, th, format, args);
 	}
 
-	public boolean isRunning() {
-		return running;
+	public void logInfo(String format, Object... args) {
+		Trace.logInfo(logger, format, args);
+	}
+
+	public void logSevere(String format, Object... args) {
+		Trace.logSevere(logger, format, args);
+	}
+
+	public void logWarning(String format, Object... args) {
+		Trace.logWarning(logger, format, args);
 	}
 
 	@Override

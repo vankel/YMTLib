@@ -125,7 +125,7 @@ public class Reflection {
 
 	private static class UnsafeAccessorImpl implements UnsafeAccessor {
 		/**
-		 * •–‚p
+		 * é»’é­”è¡“
 		 */
 		private Unsafe unsafe;
 

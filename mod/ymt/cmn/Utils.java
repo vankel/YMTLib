@@ -17,14 +17,14 @@ package mod.ymt.cmn;
 
 import java.util.Random;
 import java.util.logging.Logger;
-import net.minecraft.src.Block;
-import net.minecraft.src.EntityList;
-import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.Item;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.ModLoader;
-import net.minecraft.src.TileEntity;
-import net.minecraft.src.World;
+import net.minecraft.block.Block;
+import net.minecraft.entity.EntityList;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
+import cpw.mods.fml.common.registry.LanguageRegistry;
 
 /**
  * @author Yamato
@@ -37,9 +37,14 @@ public class Utils {
 		;
 	}
 
+	public static void addLocalization(String key, String en_name, String ja_name) {
+		LanguageRegistry.instance().addStringLocalization(key, en_name);
+		LanguageRegistry.instance().addStringLocalization(key, "ja_JP", ja_name);
+	}
+
 	public static void addName(Object obj, String en_name, String ja_name) {
-		ModLoader.addName(obj, en_name);
-		ModLoader.addName(obj, "ja_JP", ja_name);
+		LanguageRegistry.instance().addName(obj, en_name);
+		LanguageRegistry.instance().addNameForObject(obj, "ja_JP", ja_name);
 	}
 
 	public static int compare(int x, int y) {
@@ -98,7 +103,7 @@ public class Utils {
 	}
 
 	public static boolean isForge() {
-		return ModLoader.isModLoaded("Forge");
+		return true; // Loader.isModLoaded("Forge");
 	}
 
 	public static boolean isServerSide(World world) {
@@ -107,7 +112,7 @@ public class Utils {
 
 	public static boolean isValidTileEntity(TileEntity ent) {
 		TileEntity ent2 = ent.getWorldObj().getBlockTileEntity(ent.xCoord, ent.yCoord, ent.zCoord);
-		if (ent2 != null && ent != ent2) { // •p”É‚É–À‚¢‚ñ‚Å‚­‚é‚Ì‚ÅA‚à‚µ‚â‚Á‚Ä‚«‚½ê‡‚Í—eÍ‚È‚­ invalidate
+		if (ent2 != null && ent != ent2) { // é »ç¹ã«è¿·ã„è¾¼ã‚“ã§ãã‚‹ã®ã§ã€ã‚‚ã—ã‚„ã£ã¦ããŸå ´åˆã¯å®¹èµ¦ãªã invalidate
 			ent.invalidate();
 			log.fine(String.format("Tool#isValidTileEntity - InvalidateTileEntity[%s] %d, %d, %d", ent, ent.xCoord, ent.yCoord, ent.zCoord));
 		}

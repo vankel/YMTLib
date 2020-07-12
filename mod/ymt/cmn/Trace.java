@@ -15,26 +15,14 @@
  */
 package mod.ymt.cmn;
 
-import java.io.PrintStream;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
 public class Trace {
-	private static final StdoutInterceptor interceptor = StdoutInterceptor.getInstance();
-
 	public static void log(Logger logger, Level level, String format, Object... args) {
 		if (logger.isLoggable(level)) {
 			logger.log(level, format(format, args));
-		}
-	}
-
-	public static void log(PrintStream ps, String format, Object... args) {
-		if (ps != null) {
-			if (args == null || args.length == 0)
-				ps.println(format);
-			else
-				ps.println(String.format(format, args));
 		}
 	}
 
@@ -42,16 +30,8 @@ public class Trace {
 		log(logger, Level.CONFIG, format, args);
 	}
 
-	public static void logConfig(String format, Object... args) {
-		log(interceptor.getPrintStream(Level.CONFIG), format, args);
-	}
-
 	public static void logFine(Logger logger, String format, Object... args) {
 		log(logger, Level.FINE, format, args);
-	}
-
-	public static void logFine(String format, Object... args) {
-		log(interceptor.getPrintStream(Level.FINE), format, args);
 	}
 
 	public static void logFineThrow(Logger logger, Throwable th, String format, Object... args) {
@@ -66,16 +46,12 @@ public class Trace {
 		log(logger, Level.INFO, format, args);
 	}
 
-	public static void logInfo(String format, Object... args) {
-		log(interceptor.getPrintStream(Level.INFO), format, args);
+	public static void logSevere(Logger logger, String format, Object... args) {
+		log(logger, Level.SEVERE, format, args);
 	}
 
 	public static void logWarning(Logger logger, String format, Object... args) {
 		log(logger, Level.WARNING, format, args);
-	}
-
-	public static void logWarning(String format, Object... args) {
-		log(interceptor.getPrintStream(Level.WARNING), format, args);
 	}
 
 	public static void logWarningThrow(Logger logger, Throwable th, String format, Object... args) {

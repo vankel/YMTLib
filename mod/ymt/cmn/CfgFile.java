@@ -22,7 +22,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-import net.minecraft.src.Minecraft;
+import java.util.logging.Logger;
+import net.minecraft.client.Minecraft;
 
 /**
  * @author Yamato
@@ -32,6 +33,7 @@ public class CfgFile {
 	private static File cfgdir = new File(getMcGameDir(), "/config/");
 	private final File file;
 	private final Properties props = new Properties();
+	private final Logger logger = Logger.getLogger(getClass().getName());
 
 	public CfgFile(File dir, String filename) {
 		this.file = new File(dir, filename);
@@ -62,7 +64,7 @@ public class CfgFile {
 				result = Double.parseDouble(value);
 			}
 			catch (NumberFormatException e) {
-				System.err.println("CfgFile Format Error: file = " + file + ", key = " + key + ", value = " + value);
+				Trace.logWarning(logger, "CfgFile Format Error: file = %s, key = %s, value = %s", file, key, value);
 				value = null;
 			}
 		}
@@ -80,7 +82,7 @@ public class CfgFile {
 				result = Float.parseFloat(value);
 			}
 			catch (NumberFormatException e) {
-				System.err.println("CfgFile Format Error: file = " + file + ", key = " + key + ", value = " + value);
+				Trace.logWarning(logger, "CfgFile Format Error: file = %s, key = %s, value = %s", file, key, value);
 				value = null;
 			}
 		}
@@ -98,7 +100,7 @@ public class CfgFile {
 				result = Integer.parseInt(value);
 			}
 			catch (NumberFormatException e) {
-				System.err.println("CfgFile Format Error: file = " + file + ", key = " + key + ", value = " + value);
+				Trace.logWarning(logger, "CfgFile Format Error: file = %s, key = %s, value = %s", file, key, value);
 				value = null;
 			}
 		}
@@ -127,7 +129,7 @@ public class CfgFile {
 		if (value != null) {
 			result = parseIntList(value);
 		}
-		set(key, result); // CleanUp ‚Ì‚½‚ß–³ğŒ‚ÅÄİ’è
+		set(key, result); // CleanUp ã®ãŸã‚ç„¡æ¡ä»¶ã§å†è¨­å®š
 		return result;
 	}
 
@@ -194,12 +196,12 @@ public class CfgFile {
 			if (initFile() && file.canRead()) {
 				FileInputStream fin = new FileInputStream(file);
 				try {
-					// “Ç‚İ‚İ
+					// èª­ã¿è¾¼ã¿
 					props.load(fin);
-					// ƒƒOo—Í
-					System.out.println("YMTLib-CfgFile load from: " + file);
+					// ãƒ­ã‚°å‡ºåŠ›
+					Trace.logFine(logger, "YMTLib-CfgFile load from: %s", file);
 					for (String key: props.stringPropertyNames()) {
-						System.out.println("    " + key + " = " + props.getProperty(key));
+						Trace.logFine(logger, "    %s = %s", key, props.getProperty(key));
 					}
 				}
 				finally {
@@ -212,17 +214,7 @@ public class CfgFile {
 		}
 	}
 
-	private static File getMcGameDir() {
-		try {
-			return Minecraft.getMinecraft().mcDataDir; // Minecraft ‚ª‚ ‚ê‚ÎAmcDataDir ‚ğg—p
-		}
-		catch (NoClassDefFoundError ex) {
-			;
-		}
-		return new File("."); // ‚È‚©‚Á‚½‚çb’è‚ÅƒJƒŒƒ“ƒgƒfƒBƒŒƒNƒgƒŠ
-	}
-
-	private static List<Integer> parseIntList(String text) {
+	private List<Integer> parseIntList(String text) {
 		List<Integer> result = new ArrayList<Integer>();
 		if (text != null) {
 			for (String value: text.split(",")) {
@@ -232,12 +224,22 @@ public class CfgFile {
 						result.add(Integer.parseInt(value));
 					}
 					catch (NumberFormatException ex) {
-						System.err.println("IllegalNumberFormat: " + value);
+						Trace.logWarning(logger, "CfgFile IllegalNumberFormat Error: file = %s, value = %s", file, value);
 					}
 				}
 			}
 		}
 		return result;
+	}
+
+	private static File getMcGameDir() {
+		try {
+			return Minecraft.getMinecraft().mcDataDir; // Minecraft ãŒã‚ã‚Œã°ã€mcDataDir ã‚’ä½¿ç”¨
+		}
+		catch (NoClassDefFoundError ex) {
+			;
+		}
+		return new File("."); // ãªã‹ã£ãŸã‚‰æš«å®šã§ã‚«ãƒ¬ãƒ³ãƒˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª
 	}
 
 	private static String toString(List<Integer> value) {
